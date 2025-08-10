@@ -34,21 +34,50 @@ class Users extends CI_Controller {
 		if ($this->form_validation->run() == false) {
 			$this->load->view('signup'); 
 		} else {
-			$this->User->insert_user($_POST);
+			$user_data = $this->User->insert_user($_POST);
 			$this->session->set_flashdata('success', "Welcome, " .$this->input->post('first_name'). "! Your account is ready.");
-			$this->load->view('catalogue');
+			$this->session->set_userdata('user_data', $user_data);
+
+			redirect('catalogue');
 		}
+	}
+
+	public function show_catalogue() {
+		if ($this->session->userdata('user_data')) {
+			$this->load->view('catalogue');
+		} else {
+			$this->session->set_flashdata('error', 'You must be logged in to access the catalogue.');
+			redirect('login');
+		}
+	}
+
+	public function logout() {
+		$this->session->sess_destroy();
+		redirect('/');
 	}
 
 	public function login() {
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
-		if ($this->form_validation->run() == false) {
-			$this->session->set_flashdata('success', 'User registered successfully!');
-			$this->load->view('login');
+		if ($this->form_validation->run() == true) {
+			$email = $this->input->post('email', true);
+			$password = $this->input->post('password', true);
+
+			$user_data = $this->User->get_user($email);
+			if($user_data && password_verify($password, $user_data['password']) && $user_data['is_admin'] == 0) {
+				$this->session->set_userdata('user_data', $user_data);
+				$this->session->set_flashdata('success', "Welcome, " . $user_data['first_name']. "! You have successfully logged in.");
+				redirect('catalogue');
+			} else if ($user_data && password_verify($password, $user_data['password']) && $user_data['is_admin'] == 1 ) {
+				$this->load->view('admin_orders');
+			} else {
+				$this->session->set_flashdata('error', 'Invalid email or password.');
+				redirect('/');
+			}
+
 		} else {
-			echo "hello chug!";
+			echo "hello chug";
 		}
 
 	}

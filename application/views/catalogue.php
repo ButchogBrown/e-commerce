@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/product_dashboard.css') ?>">
+	<script src="<?= base_url("assets/js/vendor/toastr.min.js")?>"></script>
+	<link rel="stylesheet" href="<?=  base_url('../assets/css/vendor/toastr.min.css') ?>">
 </head>
 
 <script>
@@ -24,16 +26,22 @@
     })
 </script>
 <body>
+	<?php if($this->session->flashdata('success')): ?>
+		<script>
+				toastr.success("<?= $this->session->flashdata('success'); ?>");
+		</script>
+		
+	<?php endif; ?>
     <div class="wrapper">
         <header>
             <h1>Let’s order fresh items for you.</h1>
             <div>
                 <a class="signup_btn" href="signup.html">Signup</a>
-                <a class="login_btn" href="login.html">Login</a>
+                <a class="login_btn" href="<?= base_url('logout') ?>">Logout</a>
             </div>
         </header>
         <aside>
-            <a href="products_dashboard.html"><img src="b<?= base_url('../assets/images/organic_shop_logo.svg') ?>" alt="Organic Shop"></a>
+            <a href="products_dashboard.html"><img src="<?= base_url('../assets/images/organic_shop_logo.svg') ?>" alt="Organic Shop"></a>
             <!-- <ul>
                 <li class="active"><a href="#"></a></li>
                 <li><a href="#"></a></li>

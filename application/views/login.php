@@ -35,6 +35,12 @@
 				toastr.success("<?= $this->session->flashdata('success'); ?>");
 		</script>
 	<?php endif; ?>
+
+	<?php if($this->session->flashdata('error')): ?>
+		<script>
+				toastr.error("<?= $this->session->flashdata('error'); ?>");
+		</script>
+	<?php endif; ?>
     <div class="wrapper">
         <a href="/dashboard"><img src="<?= base_url('../assets/images/organic_shop_logo_large.svg') ?>" alt="Organic Shop"></a>
 		
@@ -45,7 +51,7 @@
             <a href="<?= base_url('signup')?>">New Member? Register here.</a>
             <ul>
                 <li>
-                    <input type="text" name="email">
+                    <input type="text" name="email" value="<?= set_value('email') ?>">
                     <label>Email</label>
 
 					<?php if (form_error('email')):?>
@@ -55,7 +61,7 @@
 					<?php endif; ?>
                 </li>
                 <li>
-                    <input type="password" name="password">
+                    <input type="password" name="password" value="12345678">
                     <label>Password</label>
 
 					<?php if (form_error('password')):?>
