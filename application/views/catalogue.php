@@ -18,14 +18,12 @@
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/product_dashboard.css') ?>">
 	<script src="<?= base_url("assets/js/vendor/toastr.min.js")?>"></script>
+	<script src="<?= base_url("assets/js/main/catalogue.js")?>"></script>
 	<link rel="stylesheet" href="<?=  base_url('../assets/css/vendor/toastr.min.css') ?>">
 </head>
 
-<script>
-    $(document).ready(function() {
-    })
-</script>
-<body>
+
+<body> 
 	<?php if($this->session->flashdata('success')): ?>
 		<script>
 				toastr.success("<?= $this->session->flashdata('success'); ?>");
@@ -48,52 +46,37 @@
             </ul> -->
         </aside>
         <section >
-            <form action="process.php" method="post" class="search_form">
+			<?php echo form_open('search', ['class' => 'search_form']) ?>
+            <!-- <form action="process.php" method="post" class="search_form"> -->
                 <input type="text" name="search" placeholder="Search Products">
             </form>
             <a class="show_cart" href="cart.html">Cart (0)</a>
-            <form action="process.php" method="post" class="categories_form">
+			<?php echo form_open('category', ['class' => 'categories_form']) ?>
                 <h3>Categories</h3>
-                <ul>
+                <ul id="category">
                     <li>
-                        <button type="submit" class="active">
-                            <span>36</span><img src="<?= base_url('../assets/images/apple.png') ?>" alt="#"><h4>All Products</h4>
+                        <button type="submit" class="active" name="category_type" value="0">
+                            <span><?= $allProducts ?></span><img src="<?= base_url('../assets/images/apple.png') ?>" alt="#"><h4>All Products</h4>
                         </button>
                     </li>
+					<?php foreach($category_count as $category): ?>
                     <li>
-                        <button type="submit">
-                            <span>36</span><img src="<?=base_url('../assets/images/apple.png') ?>" alt="#"><h4>Vegetables</h4>
+                        <button type="submit" name="category_type" value="<?= $category['category_id']?>">
+                            <span><?= $category['category_count'] ?></span><img src="<?=base_url($category['icon']) ?>" alt="#"><h4><?= $category['product'] ?></h4>
                         </button>
                     </li>
-                    <li>
-                        <button type="submit">
-                            <span>36</span><img src="<?=base_url('../assets/images/apple.png') ?>" alt="#"><h4>Fruits</h4>
-                        </button>
-                    </li>
-                    <li>
-                        <button type="submit">
-                            <span>36</span><img src="<?= base_url('../assets/images/apple.png') ?>" alt="#"><h4>Pork</h4>
-                        </button>
-                    </li>
-                    <li>
-                        <button type="submit">
-                            <span>36</span><img src="<?= base_url('../assets/images/apple.png') ?>" alt="#"><h4>Beef</h4>
-                        </button>
-                    </li>
-                    <li>
-                        <button type="submit">
-                            <span>36</span><img src="<?= base_url('../assets/images/apple.png') ?>" alt="#"><h4>Chicken</h4>
-                        </button>
-                    </li>
+					<?php endforeach; ?>
+                 
                 </ul>
             </form>
             <div>
-                <h3>All Products(46)</h3>
+                <h3>All Products(<?= $allProducts ?>)</h3>
                 <ul>
+					<?php foreach($product_data as $product): ?>
                     <li>
-                        <a href="product_view.html">
+                        <a href="<?= base_url('product/'. $product['product_id'])?>">
                             <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
+                            <h3><?= $product['product_name']?></h3>
                             <ul class="rating">
                                 <li></li>
                                 <li></li>
@@ -102,150 +85,10 @@
                                 <li></li>
                             </ul>
                             <span>36 Rating</span>
-                            <span class="price">$ 10</span>
+                            <span class="price">$ <?= $product['price'] ?></span>
                         </a>
                     </li>
-                    <li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-
-					<li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-
-					<li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-
-					<li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-
-					<li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-
-					<li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
-
-					<li>
-                        <a href="product_view.html">
-                            <img src="<?= base_url('../assets/images/food.png') ?>" alt="#">
-                            <h3>Vegetables</h3>
-                            <ul class="rating">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <span>36 Rating</span>
-                            <span class="price">$ 10</span>
-                        </a>
-                    </li>
+                    <?php endforeach; ?>
                     
                 </ul>
             </div>

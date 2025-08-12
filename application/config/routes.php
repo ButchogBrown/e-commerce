@@ -7,5 +7,9 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['signup'] = 'users/signup';
 $route['login'] = 'users/login';
-$route['catalogue'] = 'users/show_catalogue';
+$route['catalogue'] = 'products';
 $route['logout'] = 'users/logout';
+
+$route['category'] = 'products/getProductByCategory';
+$route['search'] = 'products/searchProduct';
+$route['product/(:any)'] = 'products/showProductCard/$1';

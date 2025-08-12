@@ -42,14 +42,7 @@ class Users extends CI_Controller {
 		}
 	}
 
-	public function show_catalogue() {
-		if ($this->session->userdata('user_data')) {
-			$this->load->view('catalogue');
-		} else {
-			$this->session->set_flashdata('error', 'You must be logged in to access the catalogue.');
-			redirect('login');
-		}
-	}
+	
 
 	public function logout() {
 		$this->session->sess_destroy();
