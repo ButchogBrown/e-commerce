@@ -52,8 +52,12 @@ class Products extends CI_Controller {
  		$this->load->view('catalogue', $data);
 	}
 
-	public function showProductCard($id) {
-		$this->load->view('product_view');
+	public function showProductCard($product_id) {
+		$data['product_data'] = $this->Product->getProduct($product_id);
+		$data['category'] = $this->Product->getByCategory($data['product_data']['category_id']);
+		$this->load->view('product_view', $data);
 	}
+
+
 	
 }

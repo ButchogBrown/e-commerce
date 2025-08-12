@@ -11,6 +11,13 @@ class Product extends CI_Model {
 		$this->db->order_by('products.created_at', 'DESC');
 		return $this->db->get()->result_array();
 	}
+	
+	public function getProduct($product_id) {
+		$this->db->select('products.*');
+		$this->db->from('products');
+		$this->db->where('product_id', $product_id);
+		return $this->db->get()->row_array();
+	}
 
 	public function categoryCount() {
 		$this->db->select('categories.*, count(products.product_id) as category_count, ');

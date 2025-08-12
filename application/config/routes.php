@@ -13,3 +13,6 @@ $route['logout'] = 'users/logout';
 $route['category'] = 'products/getProductByCategory';
 $route['search'] = 'products/searchProduct';
 $route['product/(:any)'] = 'products/showProductCard/$1';
+
+$route['cart/(:any)'] = 'carts/addToCart/$1';
+$route['cart'] = 'carts';
