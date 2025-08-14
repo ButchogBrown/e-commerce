@@ -16,3 +16,5 @@ $route['product/(:any)'] = 'products/showProductCard/$1';
 
 $route['cart/(:any)'] = 'carts/addToCart/$1';
 $route['cart'] = 'carts';
+$route['cart/count'] = 'carts/cartCount';
+$route['cart/remove/(:any)'] = 'carts/remove/$1';

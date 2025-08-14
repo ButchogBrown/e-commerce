@@ -50,7 +50,7 @@
             <!-- <form action="process.php" method="post" class="search_form"> -->
                 <input type="text" name="search" placeholder="Search Products">
             </form>
-            <a class="show_cart" href="cart.html">Cart (0)</a>
+            <a class="show_cart" href="<?= base_url('cart') ?>">Cart (<?= $cart_count ?>)</a>
 			<?php echo form_open('category', ['class' => 'categories_form']) ?>
                 <h3>Categories</h3>
                 <ul id="category">

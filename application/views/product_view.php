@@ -12,8 +12,10 @@
     <script src="<?= base_url('../assets/js/vendor/bootstrap-select.min.js')?> "></script>
     <script src="<?= base_url('../assets/js/global/product_view.js')?> "></script>
 	<script src="<?= base_url('../assets/js/main/product_view.js')?> "></script>
+	<script src="<?= base_url("assets/js/vendor/toastr.min.js")?>"></script>
 	<link rel="stylesheet" href="<?= base_url('../assets/css/vendor/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('../assets/css/vendor/bootstrap-select.min.css') ?>">
+	<link rel="stylesheet" href="<?=  base_url('../assets/css/vendor/toastr.min.css') ?>">
 
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/product_view.css') ?>">
@@ -34,6 +36,17 @@
     // })
 </script>
 <body>
+	<?php if($this->session->flashdata('success')): ?>
+		<script>
+				toastr.success("Item(s) added to cart!");
+				toastr.warning("<?= $this->session->flashdata('success'); ?>");
+		</script>
+	<?php endif; ?>
+	<?php if($this->session->flashdata('error')): ?>
+		<script>
+			toastr.error("<?= $this->session->flashdata('error') ?>")
+		</script>
+	<?php endif; ?>
     <div class="wrapper">
         <header>
             <h1>Let’s order fresh items for you.</h1>
@@ -53,7 +66,7 @@
             <form action="process.php" method="post" class="search_form">
                 <input type="text" name="search" placeholder="Search Products">
             </form>
-            <a class="show_cart" href="<?= base_url('cart') ?>">Cart (0)</a>
+            <a class="show_cart" href="<?= base_url('cart') ?>">Cart (<?= $cart_count ?>)</a>
             <a href="<?= base_url('catalogue') ?>">Go Back</a>
             <ul>
                 <li>
