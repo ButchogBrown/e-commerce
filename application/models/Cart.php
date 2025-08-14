@@ -7,7 +7,7 @@ class Cart extends CI_Model {
 	}
 
 	public function getAllCartItem($user_id) {
-		return $this->db->select('carts.cart_id, carts.total_amount, carts.product_id, carts.quantity, products.product_name, products.price')
+		return $this->db->select('carts.cart_id, carts.total_amount, carts.product_id, carts.quantity, products.product_name, products.price, products.stock')
 				->from('carts')
 				->join('products', 'carts.product_id = products.product_id')
 				->where('user_id', $user_id)

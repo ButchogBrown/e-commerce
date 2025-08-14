@@ -20,7 +20,7 @@
 	<script src="<?= base_url('../assets/js/main/cart.js') ?>"></script>
 </head>
 
-<body>
+<body> 
     <div class="wrapper">
         <header>
             <h1>Let’s order fresh items for you.</h1>
@@ -43,7 +43,7 @@
             </form>
             <button class="show_cart">Cart (<?= $cart_count ?>)</button>
             <section>
-				<?php echo form_open('cart/remove/', ['class' => 'cart_items_form']) ?>
+				<?php echo form_open('cart/remove/', ['class' => 'cart_items_form ']) ?>
                 <!-- <form class="cart_items_form"> -->
                     <ul>
 						<?php foreach($cart_items as $item): ?>
@@ -54,7 +54,7 @@
                             <ul>
                                 <li>
                                     <label>Quantity</label>
-                                    <input type="text" min-value="1" value="<?= $item['quantity'] ?>">
+                                    <input type="text" name="quantity" id="quantity" min-value="1" value="<?= $item['quantity'] ?>" data-price="<?= $item['price'] ?>" data-stock="<?= $item['stock'] ?>">
                                     <ul>
                                         <li><button type="button" class="increase_decrease_quantity" data-quantity-ctrl="1"></button></li>
                                         <li><button type="button" class="increase_decrease_quantity" data-quantity-ctrl="0"></button></li>
@@ -77,8 +77,9 @@
 
                         <?php endforeach ?>
                     </ul>
-                </form>
-                <form class="checkout_form">
+                <!-- </form> -->
+                <!-- <form class="checkout_form"> -->
+					<ul class="checkout_form" id="checkout_form">
                     <h3>Shipping Information</h3>
                     <ul>
                         <li>
@@ -115,7 +116,8 @@
                     <h4>Shipping Fee <span>$ 5</span></h4>
                     <h4 class="total_amount">Total Amount <span>$ 45</span></h4>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">Proceed to Checkout</button>
-                </form>
+                </ul>
+				</form>
             </section>
         </section>
         <!-- Button trigger modal -->

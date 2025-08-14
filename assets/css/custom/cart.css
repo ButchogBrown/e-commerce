@@ -34,14 +34,22 @@ body .wrapper > section > section::before {
   width: 30px;
 }
 body .wrapper > section > section .cart_items_form {
-  display: inline-block;
+  display: flex;
   height: 500px;
   vertical-align: top;
-  width: 812px;
-}
-body .wrapper > section > section .cart_items_form > ul {
   width: 100%;
 }
+
+body .wrapper > section > section .cart_items_form > ul {
+  width: 900px;
+}
+#checkout_form{
+	display: inline-block;
+  margin-left: 85px;
+  vertical-align: top;
+  width: 457px;
+}
+
 body .wrapper > section > section .cart_items_form > ul > li {
   background-color: #fff;
   border-radius: 20px;
