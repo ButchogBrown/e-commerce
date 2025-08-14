@@ -18,3 +18,5 @@ $route['cart/(:any)'] = 'carts/addToCart/$1';
 $route['cart'] = 'carts';
 $route['cart/count'] = 'carts/cartCount';
 $route['cart/remove/(:any)'] = 'carts/remove/$1';
+
+$route['stripe'] = 'StripeController/index';

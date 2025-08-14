@@ -115,7 +115,7 @@
                     <h4>Items <span>$ 40</span></h4>
                     <h4>Shipping Fee <span>$ 5</span></h4>
                     <h4 class="total_amount">Total Amount <span>$ 45</span></h4>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">Proceed to Checkout</button>
+                    <button type="button" id="place_order"  class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">Proceed to Checkout</button>
                 </ul>
 				</form>
             </section>
@@ -124,7 +124,7 @@
         <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">
             Launch demo modal
         </button> -->
-        <div class="modal fade form_modal" id="card_details_modal" tabindex="-1" aria-hidden="true">
+        <!-- <div class="modal fade form_modal" id="card_details_modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <button data-dismiss="modal" aria-label="Close" class="close_modal"></button>
@@ -153,64 +153,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="modal fade form_modal" id="login_modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <button data-dismiss="modal" aria-label="Close" class="close_modal"></button>
-                    <form action="process.php" method="post">
-                        <h2>Login to order.</h2>
-                        <button type="button" class="switch_to_signup">New Member? Register here.</button>
-                        <ul>
-                            <li>
-                                <input type="text" name="email" required>
-                                <label>Email</label>
-                            </li>
-                            <li>
-                                <input type="password" name="password" required>
-                                <label>Password</label>
-                            </li>
-                        </ul>
-                        <button type="button">Login</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade form_modal" id="signup_modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <button data-dismiss="modal" aria-label="Close" class="close_modal"></button>
-                    <form action="process.php" method="post">
-                        <h2>Signup to order.</h2>
-                        <button type="button" class="switch_to_signup">Already a member? Login here.</button>
-                        <ul>
-                            <li>
-                                <input type="text" name="email" required>
-                                <label>Email</label>
-                            </li>
-                            <li>
-                                <input type="password" name="password" required>
-                                <label>Password</label>
-                            </li>
-                            <li>
-                                <input type="password" name="password" required>
-                                <label>Password</label>
-                            </li>
-                            <li>
-                                <input type="password" name="password" required>
-                                <label>Password</label>
-                            </li>
-                            <li>
-                                <input type="password" name="password" required>
-                                <label>Password</label>
-                            </li>
-                        </ul>
-                        <button type="button">Signup</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="popover_overlay"></div>
+        </div> -->
+        
 </body>
 </html>

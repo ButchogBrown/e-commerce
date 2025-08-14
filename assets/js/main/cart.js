@@ -25,5 +25,10 @@ $(document).ready(function () {
 		$(this).closest('ul').closest('li').next('li').find('.total_amount').text(total_amount);
 	
 	});
+
+	$('#place_order').click(function() {
+		$('.cart_items_form').attr('action', 'stripe');
+		$('.cart_items_form').submit();
+	});
 	
 });
