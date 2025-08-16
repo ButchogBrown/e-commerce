@@ -44,4 +44,16 @@ class Cart extends CI_Model {
 		$this->db->delete('carts', array('cart_id' => $cart_id));
 		return;
 	}
+
+	public function getPrice($cart_id, $quantity) {
+		$query = $this->db->select('products.price, products.product_id, products.product_name')
+			->from('carts')
+			->join('products', 'products.product_id = carts.product_id')
+			->where('carts.cart_id', $cart_id)
+			->get()->row_array();
+
+		$query['total_amount'] = $query['price'] * $quantity;
+		return $query;
+	}
+
 }

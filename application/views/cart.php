@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,8 +17,9 @@
 
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/cart.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('../assets/css/custom/login.css') ?>">
     <script src="<?= base_url('../assets/js/global/cart.js') ?>"></script>
-	<script src="<?= base_url('../assets/js/main/cart.js') ?>"></script>
+    <script src="<?= base_url('../assets/js/main/cart.js') ?>"></script>
 </head>
 
 <body> 
@@ -26,98 +28,140 @@
             <h1>Let’s order fresh items for you.</h1>
             <div>
                 <a class="signup_btn" data-toggle="modal" data-target="#signup_modal">Signup</a>
-				<a href="<?= base_url('logout') ?>" class="login_btn">Logout</a>
+                <a href="<?= base_url('logout') ?>" class="login_btn">Logout</a>
                 <!-- <a href="<?= base_url('logout') ?>" class="login_btn" data-toggle="modal" data-target="#login_modal">Logout</a> -->
             </div>
         </header>
         <aside>
-            <a href="<?= base_url('catalogue') ?>"><img src="<?= base_url('../assets/images/organic_shop_logo.svg') ?>" alt="Organic Shop"></a>
+            <a href="<?= base_url('catalogue') ?>"><img src="<?= base_url('../assets/images/organic_shop_logo.svg') ?>"
+                    alt="Organic Shop"></a>
             <!-- <ul>
                 <li class="active"><a href="#"></a></li>
                 <li><a href="#"></a></li>
             </ul> -->
         </aside>
-        <section >
+        <section>
             <form class="search_form">
                 <input type="text" name="search" placeholder="Search Products">
             </form>
             <button class="show_cart">Cart (<?= $cart_count ?>)</button>
             <section>
-				<?php echo form_open('cart/remove/', ['class' => 'cart_items_form ']) ?>
+                <?php echo form_open('cart/remove/', ['class' => 'cart_items_form ']); ?>
                 <!-- <form class="cart_items_form"> -->
-                    <ul>
-						<?php foreach($cart_items as $item): ?>
-                        <li>
-                            <img src="<?= base_url('../assets/images/burger.png') ?>" alt="">
-                            <h3><?= $item['product_name'] ?></h3>
-                            <span>$ <?= $item['price'] ?></span>
-                            <ul>
-                                <li>
-                                    <label>Quantity</label>
-                                    <input type="text" name="quantity" id="quantity" min-value="1" value="<?= $item['quantity'] ?>" data-price="<?= $item['price'] ?>" data-stock="<?= $item['stock'] ?>">
-                                    <ul>
-                                        <li><button type="button" class="increase_decrease_quantity" data-quantity-ctrl="1"></button></li>
-                                        <li><button type="button" class="increase_decrease_quantity" data-quantity-ctrl="0"></button></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <label>Total Amount</label>
-                                    <span class="total_amount">$ <?= $item['total_amount'] ?></span>
-                                </li>
-                                <li>
-                                    <button type="button" class="remove_item"></button>
-                                </li>
-                            </ul>
-                            <div>
-                                <p>Are you sure you want to remove this item?</p>
-                                <button type="button" class="cancel_remove" >Cancel</button>
-                                <button type="button" class="remove" data-cart="<?= $item['cart_id']?>">Remove</button>
-                            </div>
-                        </li>
+                <ul>
+                    <?php foreach($cart_items as $item): ?>
+                    <input type="hidden" name="carts_id[]" value="<?= $item['cart_id'] ?>">
+                    <li>
+                        <img src="<?= base_url('../assets/images/burger.png') ?>" alt="">
+                        <h3><?= $item['product_name'] ?></h3>
+                        <span>$ <?= $item['price'] ?></span>
+                        <ul>
+                            <li>
+                                <label>Quantity</label>
+                                <input type="text" name="quantity[]" id="quantity" min-value="1"
+                                    value="<?= $item['quantity'] ?>" data-price="<?= $item['price'] ?>"
+                                    data-stock="<?= $item['stock'] ?>">
+                                <ul>
+                                    <li><button type="button" class="increase_decrease_quantity"
+                                            data-quantity-ctrl="1"></button></li>
+                                    <li><button type="button" class="increase_decrease_quantity"
+                                            data-quantity-ctrl="0"></button></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <label>Total Amount</label>
+                                <span class="total_amount">$ <?= $item['total_amount'] ?></span>
+                            </li>
+                            <li>
+                                <button type="button" class="remove_item"></button>
+                            </li>
+                        </ul>
+                        <div>
+                            <p>Are you sure you want to remove this item?</p>
+                            <button type="button" class="cancel_remove">Cancel</button>
+                            <button type="button" class="remove" data-cart="<?= $item['cart_id'] ?>">Remove</button>
+                        </div>
+                    </li>
 
-                        <?php endforeach ?>
-                    </ul>
+                    <?php endforeach ?>
+                </ul>
                 <!-- </form> -->
                 <!-- <form class="checkout_form"> -->
-					<ul class="checkout_form" id="checkout_form">
+                <ul class="checkout_form" id="checkout_form">
                     <h3>Shipping Information</h3>
                     <ul>
                         <li>
                             <input type="text" name="first_name" required>
                             <label>First Name</label>
+							<?php if(form_error('first_name')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('first_name') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                         <li>
                             <input type="text" name="last_name" required>
                             <label>Last Name</label>
+							<?php if(form_error('last_name')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('last_name') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                         <li>
                             <input type="text" name="address_1" required>
                             <label>Address 1</label>
+							<?php if(form_error('address_1')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('address_1') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                         <li>
                             <input type="text" name="address_2" required>
                             <label>Address 2</label>
+							<?php if(form_error('address_2')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('address_2') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                         <li>
                             <input type="text" name="city" required>
                             <label>City</label>
+							<?php if(form_error('city')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('city') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                         <li>
                             <input type="text" name="state" required>
                             <label>State</label>
+							<?php if(form_error('state')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('state') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                         <li>
                             <input type="text" name="zip_code" required>
                             <label>Zip Code</label>
+							<?php if(form_error('zip_code')): ?>
+								<div class="error-message">
+									<p class="error_p"><?= form_error('zip_code') ?></p>
+								</div>
+							<?php endif; ?>
                         </li>
                     </ul>
                     <h3>Order Summary</h3>
                     <h4>Items <span>$ 40</span></h4>
                     <h4>Shipping Fee <span>$ 5</span></h4>
                     <h4 class="total_amount">Total Amount <span>$ 45</span></h4>
-                    <button type="button" id="place_order"  class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">Proceed to Checkout</button>
+                    <button type="button" id="place_order" class="btn btn-primary" data-toggle="modal"
+                        data-target="#card_details_modal">Proceed to Checkout</button>
                 </ul>
-				</form>
+                </form>
             </section>
         </section>
         <!-- Button trigger modal -->
@@ -154,6 +198,7 @@
                 </div>
             </div>
         </div> -->
-        
+
 </body>
+
 </html>

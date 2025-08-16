@@ -7,6 +7,7 @@ class Product extends CI_Model {
 	public function getAllProduct() {
 		$this->db->select('products.*, categories.product');
 		$this->db->from('products');
+		$this->db->where('stock !=', 0);
 		$this->db->join('categories', 'products.category_id = categories.category_id');
 		$this->db->order_by('products.created_at', 'DESC');
 		return $this->db->get()->result_array();
@@ -43,6 +44,15 @@ class Product extends CI_Model {
 		$this->db->or_like('products.description', $search_data);
 		
 		return $this->db->get()->result_array();
+	}
+
+	public function updateyQuantity($product_id, $old_quantity) {
+		$data = $this->getProduct($product_id);
+		$product['stock'] = $data['stock'] - $old_quantity;
+
+		$this->db->where('product_id', $product_id)
+			->update('products', $product);
+		return;
 	}
 
 }

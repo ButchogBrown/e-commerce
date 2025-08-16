@@ -14,8 +14,7 @@ class StripeController extends CI_Controller
         \Stripe\Stripe::setApiKey('sk_test_51PGJHFIv8FrCSCa2oj5mRHMzOQqkCVgPTJVhREgqdV0wNPDeNkQwUUEm1pRdHU88iBQFZ3dD0hEqj79H5meHk89R00jBxyoHcy');
 		header('Content-Type: application/json');
 
-		$YOUR_DOMAIN = 'http://localhost';
-
+		$this->session->set_flashdata('success', 'Successful Purchase');
 		$checkout_session = \Stripe\Checkout\Session::create([
 			'line_items' => [[
 				'price_data' => [
@@ -28,8 +27,8 @@ class StripeController extends CI_Controller
 				'quantity' => 1,
 			]],
 			'mode' => 'payment',
-			'success_url' => $YOUR_DOMAIN . '/success.html',
-			'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+			'success_url' => base_url('catalogue'),
+			'cancel_url' => base_url('cart'),
 		]);
 
 

@@ -27,7 +27,7 @@ $(document).ready(function () {
 	});
 
 	$('#place_order').click(function() {
-		$('.cart_items_form').attr('action', 'stripe');
+		$('.cart_items_form').attr('action', 'order');
 		$('.cart_items_form').submit();
 	});
 	
