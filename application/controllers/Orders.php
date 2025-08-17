@@ -49,8 +49,8 @@ class Orders extends CI_Controller {
 				$this->Product->updateyQuantity($data['product_id'], $qauntity[$i]);
 				$this->Cart->destroy($carts_id[$i]);
 			}
-			$shipping_id = $this->shippingDetails($_POST);
-			$this->Order->store($sum, $shipping_id);
+			$shipping_data = $this->shippingDetails($_POST);
+			$this->Order->store($sum, $shipping_data['shipping_id']);
 			$this->stripePayment($qauntity, $datas);
 			
 			
@@ -69,7 +69,7 @@ class Orders extends CI_Controller {
 			'created_at' => date('Y-m-d H:i:s'),
 		];
 
-		$this->Shipping->store($data);
+		return $this->Shipping->store($data);
 	}
 
 	public function stripePayment($quantity, $data) {
@@ -103,5 +103,52 @@ class Orders extends CI_Controller {
 
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $checkout_session->url);
+	}
+
+	public function adminLogin() {
+		$data['category_details'] = $this->Order->numberOfOrder();
+		$data['order_data'] = $this->Order->getAllOrder();
+		$data['total_number_of_order'] = count($data['order_data']);
+		
+		$this->load->view('admin_orders', $data);
+
+	}
+
+	public function displayProducts() {
+
+		$this->load->view('admin_products');
+	}
+	
+
+	public function selectStatus() {
+
+		$status_id = $this->input->post('status', true);
+		if ( (int)$status_id === 5) {
+			
+			redirect('admin_login');
+		} else {
+
+			$data['order_data'] = $this->Order->getOrder($status_id);
+		}
+		$data['category_details'] = $this->Order->numberOfOrder();
+		$get_all =  $this->Order->getAllOrder();
+		$data['total_number_of_order'] = count($get_all);
+		$this->load->view('admin_orders', $data);
+	}
+
+	public function changeOrderStatus() {
+		$new_status = (int)$this->input->post('change_status', true);
+		$order_id = $this->input->post('order_id', true);
+		
+		$current_status = (int)$this->Order->fecthOrder($order_id);
+
+		if ( $new_status > $current_status && ($current_status + 2) > $new_status) {
+			$this->Order->updateStatus($order_id, $new_status);
+			$this->session->set_flashdata('success', 'Order status updated successfully.');
+		} else {
+			$this->session->set_flashdata('error', 'Invalid status change! You cannot skip or go backwards');
+		}
+		redirect('admin_login');
+		
 	}
 }

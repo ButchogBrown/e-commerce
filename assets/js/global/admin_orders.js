@@ -26,12 +26,12 @@ $(document).ready(function() {
 
     })
 
-    $("body").on("submit", ".status_form", function() {
-        let form = $(this);
-        $.post(form.attr("action"), form.serialize(), function(res) {
-            $("tbody").html(res);
-            $(".selectpicker").selectpicker("refresh");
-        });
-        return false;
-    });
+    // $("body").on("submit", ".status_form", function() {
+    //     let form = $(this);
+    //     $.post(form.attr("action"), form.serialize(), function(res) {
+    //         $("tbody").html(res);
+    //         $(".selectpicker").selectpicker("refresh");
+    //     });
+    //     return false;
+    // });
 });

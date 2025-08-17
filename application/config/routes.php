@@ -7,6 +7,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['signup'] = 'users/signup';
 $route['login'] = 'users/login';
+$route['admin_login'] = 'orders/adminLogin';
 $route['catalogue'] = 'products';
 $route['logout'] = 'users/logout';
 
@@ -21,3 +22,7 @@ $route['cart/remove/(:any)'] = 'carts/remove/$1';
 
 $route['order'] = 'orders';
 $route['stripe'] = 'StripeController/index';
+
+$route['products'] = 'orders/displayProducts';
+$route['select_status'] = 'orders/selectStatus';
+$route['change_status'] = 'orders/changeOrderStatus';

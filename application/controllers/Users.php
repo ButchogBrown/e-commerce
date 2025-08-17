@@ -63,7 +63,9 @@ class Users extends CI_Controller {
 				$this->session->set_flashdata('success', "Welcome, " . $user_data['first_name']. "! You have successfully logged in.");
 				redirect('catalogue');
 			} else if ($user_data && password_verify($password, $user_data['password']) && $user_data['is_admin'] == 1 ) {
-				$this->load->view('admin_orders');
+				$this->session->set_flashdata('success', 'Welcome, '. $user_data['first_name']. "! You have successfully logged in.");
+				$this->session->set_userdata('user_data', $user_data);
+				redirect('admin_login');
 			} else {
 				$this->session->set_flashdata('error', 'Invalid email or password.');
 				redirect('/');
