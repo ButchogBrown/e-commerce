@@ -114,12 +114,6 @@ class Orders extends CI_Controller {
 
 	}
 
-	public function displayProducts() {
-
-		$this->load->view('admin_products');
-	}
-	
-
 	public function selectStatus() {
 
 		$status_id = $this->input->post('status', true);

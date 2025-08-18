@@ -5,7 +5,7 @@ class Product extends CI_Model {
 
     //function to get all products
 	public function getAllProduct() {
-		$this->db->select('products.*, categories.product');
+		$this->db->select('products.*, categories.*');
 		$this->db->from('products');
 		$this->db->where('stock !=', 0);
 		$this->db->join('categories', 'products.category_id = categories.category_id');
@@ -14,8 +14,9 @@ class Product extends CI_Model {
 	}
 	
 	public function getProduct($product_id) {
-		$this->db->select('products.*');
+		$this->db->select('products.*, categories.*');
 		$this->db->from('products');
+		$this->db->join('categories', 'products.category_id = categories.category_id');
 		$this->db->where('product_id', $product_id);
 		return $this->db->get()->row_array();
 	}
@@ -31,8 +32,9 @@ class Product extends CI_Model {
 
 	public function getByCategory($type) {
 	
-		$this->db->select('products.*');
+		$this->db->select('products.*, categories.product');
 		$this->db->from('products');
+		$this->db->join('categories', 'categories.category_id = products.category_id');
 		$this->db->where('products.category_id', $type);
 		return $this->db->get()->result_array();
 	}
@@ -52,6 +54,12 @@ class Product extends CI_Model {
 
 		$this->db->where('product_id', $product_id)
 			->update('products', $product);
+		return;
+	}
+
+	public function destroy($product_id) {
+		$this->db->where('product_id', $product_id)
+			->delete('products');
 		return;
 	}
 

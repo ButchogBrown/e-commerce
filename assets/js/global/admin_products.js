@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	$('.error_message').hide();
     /* To delete a product */
     $("body").on("click", ".delete_product", function() {
         $(this).closest("tr").addClass("show_delete");
@@ -47,40 +47,40 @@ $(document).ready(function() {
 
     });
 
-    $("body").on("submit", ".add_product_form", function() {
-        $.ajax({
-            url: $(this).attr("action"),
-            type: 'POST',
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData:false,
-            success: function(res) {
-                let form_data_action = $('.form_data_action').val();
+    // $("body").on("submit", ".add_product_form", function() {
+    //     $.ajax({
+    //         url: $(this).attr("action"),
+    //         type: 'POST',
+    //         data: new FormData(this),
+    //         contentType: false,
+    //         cache: false,
+    //         processData:false,
+    //         success: function(res) {
+    //             let form_data_action = $('.form_data_action').val();
                 
-                if(form_data_action == "add_product" || form_data_action == "edit_product") {
-                    if(parseInt(res) == 0) {
-                        $(".product_content").html(res);
-                        resetAddProductForm();
-                        $("#add_product_modal").modal("hide");
-                    }
-                    else {
-                        $(".image_label").html("Upload Images (4 Max) <span>* Please add an image.</span>");
-                    };
-                }
-                else if(form_data_action == "upload_image" || form_data_action == "remove_image") {
-                    $(".image_preview_list").html(res);
-                }
-                else if(form_data_action == "reset_form") {
-                    resetAddProductForm();
-                };
-                ($(".add_product_form").attr("data-modal-action") == 0) ? $(".form_data_action").val("add_product") : $(".form_data_action").val("edit_product");
-                ($(".image_preview_list").children().length >= 4) ? $(".upload_image").addClass("hidden") : $(".upload_image").removeClass("hidden");
-            }
-        });
+    //             if(form_data_action == "add_product" || form_data_action == "edit_product") {
+    //                 if(parseInt(res) == 0) {
+    //                     $(".product_content").html(res);
+    //                     resetAddProductForm();
+    //                     $("#add_product_modal").modal("hide");
+    //                 }
+    //                 else {
+    //                     $(".image_label").html("Upload Images (4 Max) <span>* Please add an image.</span>");
+    //                 };
+    //             }
+    //             else if(form_data_action == "upload_image" || form_data_action == "remove_image") {
+    //                 $(".image_preview_list").html(res);
+    //             }
+    //             else if(form_data_action == "reset_form") {
+    //                 resetAddProductForm();
+    //             };
+    //             ($(".add_product_form").attr("data-modal-action") == 0) ? $(".form_data_action").val("add_product") : $(".form_data_action").val("edit_product");
+    //             ($(".image_preview_list").children().length >= 4) ? $(".upload_image").addClass("hidden") : $(".upload_image").removeClass("hidden");
+    //         }
+    //     });
  
-        return false;
-    }); 
+    //     return false;
+    // }); 
 
     $("body").on("submit", ".categories_form", function() {
         filterProducts(form)
@@ -105,12 +105,12 @@ $(document).ready(function() {
         filterProducts($(this));
         $(".categories_form").find(".active").removeClass("active");
     });
-
+	//comment out the false true make the make sumbit
     $("body").on("submit", ".delete_product_form", function() {
         filterProducts($(this));
         $("body").removeClass("show_popover_overlay");
         $(".popover_overlay").fadeOut();
-        return false;
+        // return false;
     });
 
     $("body").on("click", ".edit_product", function() {

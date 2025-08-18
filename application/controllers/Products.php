@@ -67,6 +67,39 @@ class Products extends CI_Controller {
 		$this->load->view('product_view', $data);
 	}
 
+	//display admin product view
+	public function displayProducts() {
+		$data['product_data'] = $this->Product->getAllProduct();
+		$data['category_count'] = $this->Product->categoryCount();
+		$data['allProducts'] = count($data['product_data']);
+		// var_dump($data['product_data']);
+		$this->load->view('admin_products', $data);
+	}
 
+	public function adminProductCategory() {
+		$category_type = $this->input->post('category_type', true);
+
+		if($category_type == 0){
+			$this->displayProducts();
+		} else {
+			$data['product_data'] = $this->Product->getByCategory($category_type);
+			$data['category_count'] = $this->Product->categoryCount();
+			$data['allProducts'] = count($this->Product->getAllProduct());
+			// var_dump($data['product_data']);
+ 			$this->load->view('admin_products', $data);
+		}
+	}
+
+	public function destroy() {
+		$product_id = $this->input->post('product_id', true);
+		$this->Product->destroy($product_id);
+		$this->Cart->deleteByProductId($product_id);
+		
+	}
+
+	public function addProduct() {
+		echo "helo";
+	} 
+	
 	
 }

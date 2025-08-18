@@ -56,4 +56,9 @@ class Cart extends CI_Model {
 		return $query;
 	}
 
+	public function deleteByProductId($product_id) {
+		$this->db->where('product_id', $product_id)
+			->delete('carts');
+	}
+
 }

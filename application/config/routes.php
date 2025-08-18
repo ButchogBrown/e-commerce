@@ -23,6 +23,9 @@ $route['cart/remove/(:any)'] = 'carts/remove/$1';
 $route['order'] = 'orders';
 $route['stripe'] = 'StripeController/index';
 
-$route['products'] = 'orders/displayProducts';
+$route['products'] = 'products/displayProducts';
 $route['select_status'] = 'orders/selectStatus';
 $route['change_status'] = 'orders/changeOrderStatus';
+
+$route['admin_category'] = 'products/adminProductCategory';
+$route['delete_product'] = 'products/destroy';
