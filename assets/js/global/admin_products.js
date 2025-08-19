@@ -20,10 +20,10 @@ $(document).ready(function() {
     });
 
     /* To trigger image upload */
-    $("body").on("change", ".image_input", function() {
-        $('.form_data_action').val("upload_image");
-        $(".add_product_form").trigger("submit");
-    });
+    // $("body").on("change", ".image_input", function() {
+    //     $('.form_data_action').val("upload_image");
+    //     $(".add_product_form").trigger("submit");
+    // });
 
     /* To delete an image */
     $("body").on("click", ".delete_image", function() {
@@ -106,19 +106,36 @@ $(document).ready(function() {
         $(".categories_form").find(".active").removeClass("active");
     });
 	//comment out the false true make the make sumbit
-    $("body").on("submit", ".delete_product_form", function() {
-        filterProducts($(this));
-        $("body").removeClass("show_popover_overlay");
-        $(".popover_overlay").fadeOut();
-        // return false;
-    });
+    // $("body").on("submit", ".delete_product_form", function() {
+    //     filterProducts($(this));
+    //     $("body").removeClass("show_popover_overlay");
+    //     $(".popover_overlay").fadeOut();
+    //     return false;
+    // });
 
     $("body").on("click", ".edit_product", function() {
+		let product_id = $(this).val();
+		let row = $(this).closest('td');
+		let stock = Number(row.prev().prev().text());
+		let price = row.prev().prev().prev().prev().text();
+		price = Number(price.slice(2));
+		let category = row.prev().prev().prev().find('span').data('value');
+		let product_name = $(this).closest("td").find('input[name="product_name"]').val();
+		let description = $(this).closest("td").find('input[name="edit_description"]').val();
+	
+		$('#edit_inventory').val(stock);
+		$('#edit_price').val(price);
+		$('#edit_category').val(category).trigger('change');
+		$('#edit_product_name').val(product_name);
+		$('#edit_description').text(description);
+
+
         $("input[name=edit_product_id]").val($(this).val());
-        $("#add_product_modal").modal("show");
+        $("#edit_product_modal").modal("show");
         $(".form_data_action").val("edit_product");
-        $(".add_product_form").attr("data-modal-action", 1);
-        $("#add_product_modal").find("h2").text("Edit product #" + $(this).val());
+        $(".edit_product_form").attr("data-modal-action", 1);
+		$('.edit_product_form').attr('action', 'edit_product/'+$.trim(product_id));
+        $("#edit_product_modal").find("h2").text("Edit product #" + $(this).val());
     });
 
     $("body").on("submit", ".get_edit_data_form", function() {

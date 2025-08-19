@@ -29,3 +29,5 @@ $route['change_status'] = 'orders/changeOrderStatus';
 
 $route['admin_category'] = 'products/adminProductCategory';
 $route['delete_product'] = 'products/destroy';
+$route['add_product'] = 'products/addProduct';
+$route['edit_product/(:any)'] = 'products/editProduct/$1';

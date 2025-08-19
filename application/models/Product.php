@@ -63,4 +63,15 @@ class Product extends CI_Model {
 		return;
 	}
 
+	public function addProduct($product_data) {
+		$this->db->insert('products', $product_data);
+		return $this->db->insert_id();
+		
+	}
+
+	public function addImage($path, $product_id) {
+
+		$this->db->insert('images', ['product_id' => $product_id, 'image_path' => $path, 'created_at' => date('Y-m-d H:i:s')]);
+	}
+
 }

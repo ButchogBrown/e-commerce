@@ -6,22 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
 
-    <script src="../assets/js/vendor/jquery.min.js"></script>
-    <script src="../assets/js/vendor/popper.min.js"></script>
-    <script src="../assets/js/vendor/bootstrap.min.js"></script>
-    <script src="../assets/js/vendor/bootstrap-select.min.js"></script>
-	<script src="../assets/js/vendor/jquery.validate.js"></script>
-    <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/vendor/bootstrap-select.min.css">
+    <script src="<?= base_url('../assets/js/vendor/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('../assets/js/vendor/popper.min.js') ?>"></script>
+    <script src="<?= base_url('../assets/js/vendor/bootstrap.min.js') ?>"></script>
+    <script src="<?= base_url('../assets/js/vendor/bootstrap-select.min.js') ?>"></script>
+	<script src="<?= base_url('../assets/js/vendor/jquery.validate.js') ?>"></script>
+    <link rel="stylesheet" href="<?= base_url('../assets/css/vendor/bootstrap.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('../assets/css/vendor/bootstrap-select.min.css') ?>">
 
-    <link rel="stylesheet" href="../assets/css/custom/admin_global.css">
+    <link rel="stylesheet" href="<?= base_url('../assets/css/custom/admin_global.css') ?>">
 	<link rel="stylesheet" href="<?= base_url('../assets/css/custom/admin_products.css') ?>">
-    <script src="../assets/js/global/admin_products.js"></script>
-	<script src="../assets/js/main/admin_product.js"></script>
+	<link rel="stylesheet" href="<?=  base_url('../assets/css/vendor/toastr.min.css') ?>">
+    <script src="<?= base_url('../assets/js/global/admin_products.js') ?>"></script>
+	<script src="<?= base_url('../assets/js/main/admin_product.js') ?>"></script>
+	<script src="<?= base_url("assets/js/vendor/toastr.min.js")?>"></script>
 
 </head>
 
 <body> 
+	<?php if($this->session->flashdata('success')): ?>
+		<script>
+				toastr.success("<?= $this->session->flashdata('success'); ?>");
+		</script>
+	<?php endif; ?>
+
+	<?php if($this->session->flashdata('error')): ?>
+		<script>
+				toastr.error("<?= $this->session->flashdata('error'); ?>");
+		</script>
+	<?php endif; ?>
+
     <div class="wrapper">
         <header>
             <h1>Let’s provide fresh items for everyone.</h1>
@@ -29,7 +43,7 @@
             <div>
                 <a class="switch" href=" <?= base_url('catalogue') ?> ">Switch to Shop View</a>
                 <button class="profile">
-                    <img src="../assets/images/profile.png" alt="#">
+                    <img src="<?= base_url('../assets/images/profile.png') ?>" alt="#">
                 </button>
             </div>
             <div class="dropdown show">
@@ -40,7 +54,7 @@
             </div>
         </header>
         <aside>
-            <a href="#"><img src="../assets/images/organi_shop_logo_dark.svg" alt="Organic Shop"></a>
+            <a href="#"><img src="<?= base_url('../assets/images/organi_shop_logo_dark.svg') ?>" alt="Organic Shop"></a>
             <ul>
                 <li><a href="<?= base_url('admin_login') ?>">Orders</a></li>
                 <li class="active"><a href="#">Products</a></li>
@@ -106,24 +120,26 @@
                         <tr>
                             <td>
                                 <span>
-                                    <img src="../assets/images/food.png" alt="#">
+                                    <img src="<?= base_url($images[$data['product_id']][0]['image_path'] ) ?>" alt="#">
                                     <?= $data['product_name'] ?>
                                 </span>
                             </td>
-                            <td><span> <?= $data['product_id']?> </span></td>
-                            <td><span>$ <?= $data['price'] ?> </span></td>
-                            <td><span> <?= $data['product'] ?> </span></td>
+                            <td><span class="target"> <?= $data['product_id']?> </span></td>
+                            <td><span class="price">$ <?= $data['price'] ?> </span></td>
+                            <td><span data-value="<?= $data['category_id'] ?>"> <?= $data['product'] ?> </span></td>
                             <td><span> <?= $data['stock'] ?> </span></td>
                             <td><span> <?= $data['sold'] ?> </span></td>
                             <td>
                                 <span>
-                                    <button class="edit_product">Edit</button>
+									<input type="hidden" name="edit_description" value="<?= $data['description'] ?>">
+									<input type="hidden" name="product_name" value="<?= $data['product_name']?>" class="product_name">
+                                    <button class="edit_product" value=" <?= $data['product_id']?> ">Edit</button>
                                     <button class="delete_product">X</button>
                                 </span>
 								<?php echo form_open('delete_product', ['class' => 'delete_product_form']) ?>
                                 <!-- <form class="delete_product_form" action="process.php" method="post"> -->
                                     <p>Are you sure you want to remove this item?</p>
-									<input type="hidden" name="product_id" value="<?= $data['product_id'] ?>">
+									<input type="hidden" name="product_id" value="<?= $data['product_id'] ?>" > 
                                     <button type="button" class="cancel_remove">Cancel</button>
                                     <button type="submit">Remove</button>
                                 </form>
@@ -138,7 +154,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <button data-dismiss="modal" aria-label="Close" class="close_modal"></button>
-					<?php echo form_open_multipart('', ['class' => 'add_product_form']) ?>
+					<?php echo form_open_multipart('add_product', ['class' => 'add_product_form']) ?>
                     <!-- <form class="delete_product_form" action="process.php" method="post"> -->
                         <h2>Add a Product</h2>
                         <ul>
@@ -146,6 +162,7 @@
                                 <input type="text" name="product_name" >
                                 <label>Product Name</label>
 								<p class="error_message"></p>
+								
                             </li>
                             <li>
                                 <textarea name="description" ></textarea>
@@ -155,11 +172,11 @@
                             <li>
                                 <label>Category</label>
                                 <select class="selectpicker" name="selectpicker">
-                                    <option>Vegetables</option>
-                                    <option>Fruits</option>
-                                    <option>Pork</option>
-                                    <option>Beef</option>
-                                    <option>Chicken</option>
+                                    <option value="1">Vegetables</option>
+                                    <option value="2">Fruits</option>
+                                    <option value="3">Pork</option>
+                                    <option value="4">Beef</option>
+                                    <option value="5">Chicken</option>
                                 </select>
 								<p class="error_message"></p>
                             </li>
@@ -178,9 +195,70 @@
                                 <ul>
                                     <li><button type="button" class="upload_image"></button></li>
                                 </ul>
-                                <input type="file" name="image[]" accept="image/*" class="image_input" multiple>
+                                <input type="file" name="image[]" accept="image/*" class="image_input" id="image_input" multiple>
+								<p class="error_message">sdfsdfg</p>
+								<div id="preview"></div>
+
+                            </li>
+                        </ul>
+                        <button type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
+                        <button type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade form_modal" id="edit_product_modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button data-dismiss="modal" aria-label="Close" class="close_modal"></button>
+					<?php echo form_open_multipart('add_product', ['class' => 'edit_product_form']) ?>
+                    <!-- <form class="delete_product_form" action="process.php" method="post"> -->
+                        <h2>Add a Product</h2>
+                        <ul>
+                            <li>
+                                <input type="text" name="product_name" id="edit_product_name">
+                                <label>Product Name</label>
+								<p class="error_message"></p>
+								
+                            </li>
+                            <li>
+                                <textarea name="description" id="edit_description"></textarea>
+                                <label>Description</label>
 								<p class="error_message"></p>
                             </li>
+                            <li>
+                                <label>Category</label>
+                                <select class="selectpicker" name="selectpicker" id="edit_category">
+                                    <option value="1">Vegetables</option>
+                                    <option value="2">Fruits</option>
+                                    <option value="3">Pork</option>
+                                    <option value="4">Beef</option>
+                                    <option value="5">Chicken</option>
+                                </select>
+								<p class="error_message"></p>
+                            </li>
+                            <li>
+                                <input type="number" name="price" value="1" id="edit_price">
+                                <label>Price</label>
+								<p class="error_message"></p>
+                            </li>
+                            <li>
+                                <input type="number" name="inventory" value="1" id="edit_inventory">
+                                <label>Inventory</label>
+								<p class="error_message"></p>
+                            </li>
+                            <!-- <li>
+                                <label>Upload Images (5 Max)</label>
+                                <ul>
+                                    <li><button type="button" class="upload_image"></button></li>
+                                </ul>
+                                <input type="file" name="image[]" accept="image/*" class="image_input" id="image_input" multiple>
+								<p class="error_message">sdfsdfg</p>
+								<div id="preview"></div>
+
+                            </li> -->
                         </ul>
                         <button type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
                         <button type="submit">Save</button>
