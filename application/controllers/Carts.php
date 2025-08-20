@@ -12,13 +12,15 @@ class Carts extends CI_Controller {
 
 		$this->load->model('Product');
 		$this->load->model('Cart');
+		$this->load->model('Image');
 	}
 
 	public function index() {
 		$user_data = $this->session->userdata('user_data');
 		$data['cart_items'] = $this->Cart->getAllCartItem($user_data['user_id']);
 		$data['cart_count'] = count($data['cart_items']);
-
+		$data['images'] = $this->Image->getAllImage($data['cart_items']);
+		
 		$this->load->view('cart', $data);
 	}
 

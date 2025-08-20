@@ -23,7 +23,9 @@ class Products extends CI_Controller
             $data['category_count'] = $this->Product->categoryCount();
             $data['allProducts'] = count($data['product_data']);
             $data['cart_count'] = $this->Cart->cartCount($user_data['user_id']);
+			$data['images'] = $this->Image->getAllImage($data['product_data']);
 
+			// var_dump($data['images']);
             $this->load->view('catalogue', $data);
         } else {
             $this->session->set_flashdata('error', 'You must be logged in to access the catalogue.');
@@ -43,6 +45,7 @@ class Products extends CI_Controller
             $data['category_count'] = $this->Product->categoryCount();
             $data['allProducts'] = count($this->Product->getAllProduct());
             $data['cart_count'] = $this->Cart->cartCount($user_data['user_id']);
+			$data['images'] = $this->Image->getAllImage($data['product_data']);
 
             $this->load->view('catalogue', $data);
         }
@@ -56,6 +59,7 @@ class Products extends CI_Controller
         $data['category_count'] = $this->Product->categoryCount();
         $data['allProducts'] = count($this->Product->getAllProduct());
         $data['cart_count'] = $this->Cart->cartCount($user_data['user_id']);
+		$data['images'] = $this->Image->getAllImage($data['product_data']);
 
         $this->load->view('catalogue', $data);
     }
@@ -66,7 +70,8 @@ class Products extends CI_Controller
         $data['product_data'] = $this->Product->getProduct($product_id);
         $data['category'] = $this->Product->getByCategory($data['product_data']['category_id']);
         $data['cart_count'] = $this->Cart->cartCount($user_data['user_id']);
-		
+		$data['images'] = $this->Image->getImage($data['product_data']['product_id']);
+
         $this->load->view('product_view', $data);
     }
 
@@ -77,7 +82,7 @@ class Products extends CI_Controller
         $data['category_count'] = $this->Product->categoryCount();
         $data['allProducts'] = count($data['product_data']);
 		$data['images'] = $this->Image->getAllImage($data['product_data']);
-        // var_dump($data['images']);
+        // var_dump($data['category_count']);
         $this->load->view('admin_products', $data);
     }
 
@@ -176,6 +181,31 @@ class Products extends CI_Controller
     }
 
 	public function editProduct($product_id) {
-		var_dump($_POST);
+		$data = [
+			'product_name' => $this->input->post('product_name', true),
+			'description' => $this->input->post('description', true),
+			'category_id' => $this->input->post('selectpicker', true),
+			'price' => $this->input->post('price', true),
+			'stock' => $this->input->post('inventory', true),
+			'sold' => 0,
+			'created_at' => date('Y-m-d H:i:s'),
+			
+		];
+
+		$this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
+		$this->form_validation->set_rules('description', 'Description', 'trim|required');
+		$this->form_validation->set_rules('selectpicker', 'Category', 'trim|required');
+		$this->form_validation->set_rules('price', 'Price', 'trim|required');
+		$this->form_validation->set_rules('inventory', 'Inventory', 'trim|required');
+
+		if( $this->form_validation->run() == false ) {
+			$this->session->set_flashdata('error', 'Something went wrong, Please try again.');
+			$this->displayProducts();
+		} else {
+			$this->Product->updateProduct($data, $product_id);
+			$this->session->set_flashdata('success', 'Successfully edited the product');
+			$this->displayProducts();
+		}
+
 	}
 }

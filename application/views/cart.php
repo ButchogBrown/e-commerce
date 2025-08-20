@@ -52,7 +52,7 @@
                     <?php foreach($cart_items as $item): ?>
                     <input type="hidden" name="carts_id[]" value="<?= $item['cart_id'] ?>">
                     <li>
-                        <img src="<?= base_url('../assets/images/burger.png') ?>" alt="">
+                        <img src="<?= base_url($images[$item['product_id']][0]['image_path']) ?>" alt="">
                         <h3><?= $item['product_name'] ?></h3>
                         <span>$ <?= $item['price'] ?></span>
                         <ul>

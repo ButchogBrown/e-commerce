@@ -13,4 +13,11 @@ class Image extends CI_Model {
 		}
 		return $images;
 	}
+
+	public function getImage($product_id) {
+		return $this->db->select('images.*')
+				->from('images')
+				->where('product_id', $product_id)
+				->get()->result_array();
+	}
 }

@@ -70,12 +70,13 @@
             <a href="<?= base_url('catalogue') ?>">Go Back</a>
             <ul>
                 <li>
-                    <img src="<?= base_url('../assets/images/burger.png') ?>" alt="food">
+                    <img src="<?= base_url($images[0]['image_path']) ?>" alt="food">
                     <ul>
                         <li class="active"><button class="show_image"><img src="<?= base_url('../assets/images/burger.png') ?>" alt="food"></button></li>
-                        <li><button class="show_image"><img src="<?= base_url('../assets/images/burger.png') ?>" alt="food"></button></li>
-                        <li><button class="show_image"><img src="<?= base_url('../assets/images/burger.png') ?>" alt="food"></button></li>
-                        <li><button class="show_image"><img src="<?= base_url('../assets/images/burger.png') ?>" alt="food"></button></li>
+                        <?php for($i = 1; $i < count($images); $i++): ?>
+							<li><button class="show_image"><img src="<?= base_url($images[$i]['image_path']) ?>" alt="food"></button></li>
+						<?php endfor; ?>
+						
                     </ul>
                 </li>
                 <li>

@@ -22,12 +22,16 @@ class Product extends CI_Model {
 	}
 
 	public function categoryCount() {
-		$this->db->select('categories.*, count(products.product_id) as category_count, ');
-		$this->db->from('products');
-		$this->db->join('categories', 'products.category_id = categories.category_id');
-		$this->db->group_by('products.category_id');
-		$this->db->order_by('categories.category_id', 'asc');
-		return $this->db->get()->result_array();
+		return $this->db->select('categories.*, count(products.product_id) as category_count')
+			->from('categories')
+			->join('products', 'products.category_id = categories.category_id', 'left')
+			->group_by('categories.category_id')
+			->order_by('categories.category_id', 'asc')
+			->get()->result_array();
+	}
+
+	public function getImage($product_id) {
+		var_dump($product_id);
 	}
 
 	public function getByCategory($type) {
@@ -73,5 +77,13 @@ class Product extends CI_Model {
 
 		$this->db->insert('images', ['product_id' => $product_id, 'image_path' => $path, 'created_at' => date('Y-m-d H:i:s')]);
 	}
+
+	public function updateProduct($product_data, $product_id) {
+		$this->db->where('product_id', $product_id)
+			->update('products', $product_data);
+		
+	}
+
+
 
 }
