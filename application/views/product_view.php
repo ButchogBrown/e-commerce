@@ -19,6 +19,7 @@
 
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('../assets/css/custom/product_view.css') ?>">
+	<script src="<?= base_url('../assets/js/main/product.js')?> "></script>
 </head>
 
 <script>
@@ -64,7 +65,7 @@
         </aside>
         <section >
             <form action="process.php" method="post" class="search_form">
-                <input type="text" name="search" placeholder="Search Products">
+                <input type="text" name="search" placeholder="Search Products" class="search">
             </form>
             <a class="show_cart" href="<?= base_url('cart') ?>">Cart (<?= $cart_count ?>)</a>
             <a href="<?= base_url('catalogue') ?>">Go Back</a>
@@ -72,7 +73,7 @@
                 <li>
                     <img src="<?= base_url($images[0]['image_path']) ?>" alt="food">
                     <ul>
-                        <li class="active"><button class="show_image"><img src="<?= base_url('../assets/images/burger.png') ?>" alt="food"></button></li>
+                        <li class="active"><button class="show_image"><img src="<?= base_url($images[0]['image_path']) ?>" alt="food"></button></li>
                         <?php for($i = 1; $i < count($images); $i++): ?>
 							<li><button class="show_image"><img src="<?= base_url($images[$i]['image_path']) ?>" alt="food"></button></li>
 						<?php endfor; ?>
@@ -119,7 +120,7 @@
 					<?php foreach($category as $product): ?>
                     <li>
                         <a href="<?= base_url('product/' .$product['product_id']) ?>">
-                            <img src="<?= base_url('../assets/images/food.png')?>" alt="#">
+                            <img src="<?= base_url($image_category[$product['product_id']][0]['image_path'])?>" alt="#">
                             <h3><?= $product['product_name'] ?></h3>
                             <ul class="rating">
                                 <li></li>

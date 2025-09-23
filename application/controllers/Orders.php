@@ -72,6 +72,7 @@ class Orders extends CI_Controller {
 		return $this->Shipping->store($data);
 	}
 
+
 	public function stripePayment($quantity, $data) {
 
 		var_dump($data, $quantity);
@@ -117,9 +118,8 @@ class Orders extends CI_Controller {
 	public function selectStatus() {
 
 		$status_id = $this->input->post('status', true);
-		if ( (int)$status_id === 5) {
-			
-			redirect('admin_login');
+		if ( (int)$status_id === 5) {	
+			$data['order_data'] = $this->Order->getAllOrder();
 		} else {
 
 			$data['order_data'] = $this->Order->getOrder($status_id);
@@ -127,7 +127,33 @@ class Orders extends CI_Controller {
 		$data['category_details'] = $this->Order->numberOfOrder();
 		$get_all =  $this->Order->getAllOrder();
 		$data['total_number_of_order'] = count($get_all);
-		$this->load->view('admin_orders', $data);
+
+		if(empty($data['order_data'])) {
+			$this->load->view('partials/error_card', array('error_message' => 'Oops! There are no orders under this status at the moment.'));
+		} else {
+			$this->load->view('partials/order_list', $data);
+		}	
+		
+	}
+
+	public function adminSelectStatus($status_id, $success) {
+
+		if ( (int)$status_id === 5) {	
+			$data['order_data'] = $this->Order->getAllOrder();
+		} else {
+
+			$data['order_data'] = $this->Order->getOrder($status_id);
+		}
+		$data['category_details'] = $this->Order->numberOfOrder();
+		$get_all =  $this->Order->getAllOrder();
+		$data['total_number_of_order'] = count($get_all);	
+
+		$html = $this->load->view('partials/order_list', $data, true);
+		echo json_encode([
+			'html' => $html,
+			'success' => $success,
+			'category_details' => $data['category_details'] 
+		]);
 	}
 
 	public function changeOrderStatus() {
@@ -136,13 +162,15 @@ class Orders extends CI_Controller {
 		
 		$current_status = (int)$this->Order->fecthOrder($order_id);
 
-		if ( $new_status > $current_status && ($current_status + 2) > $new_status) {
+		if ($new_status > $current_status) {
 			$this->Order->updateStatus($order_id, $new_status);
-			$this->session->set_flashdata('success', 'Order status updated successfully.');
+			$success = true;
+			
 		} else {
-			$this->session->set_flashdata('error', 'Invalid status change! You cannot skip or go backwards');
+			$success = false;
 		}
-		redirect('admin_login');
+		
+		$this->adminSelectStatus($current_status, $success);
 		
 	}
 }

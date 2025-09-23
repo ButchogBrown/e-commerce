@@ -1,8 +1,19 @@
 $(document).ready(function () {
+
 	$('body').on('click', '.remove', function() {
 		let cart_id = $(this).data('cart');
-		let form = $('.cart_items_form').attr('action', 'cart/remove/'+ cart_id);
-		form.submit();
+		let form = $('.cart_items_form');
+		form.attr('action', 'cart/remove/'+ cart_id);
+		let formAction = form.attr('action');
+
+		$.post(formAction, form.serializeArray(), function (res) {
+			$('.cart_items').html(res);
+			$.get('cart_count', function(res){
+				let data = JSON.parse(res)
+				$('.show_cart').text('Cart (' + data.count + ')');
+			})
+		});
+		return false;
 	});
 
 	$(document).on('click', '.increase_decrease_quantity', function() {

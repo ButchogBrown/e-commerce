@@ -19,6 +19,7 @@ $route['cart/(:any)'] = 'carts/addToCart/$1';
 $route['cart'] = 'carts';
 $route['cart/count'] = 'carts/cartCount';
 $route['cart/remove/(:any)'] = 'carts/remove/$1';
+$route['cart_count'] = 'carts/getCartCount';
 
 $route['order'] = 'orders';
 $route['stripe'] = 'StripeController/index';
@@ -31,3 +32,5 @@ $route['admin_category'] = 'products/adminProductCategory';
 $route['delete_product'] = 'products/destroy';
 $route['add_product'] = 'products/addProduct';
 $route['edit_product/(:any)'] = 'products/editProduct/$1';
+
+$route['admin_prdocut_search'] = 'products/adminProducntSearch';

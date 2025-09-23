@@ -48,20 +48,20 @@
         <section >
 			<?php echo form_open('search', ['class' => 'search_form']) ?>
             <!-- <form action="process.php" method="post" class="search_form"> -->
-                <input type="text" name="search" placeholder="Search Products">
+                <input type="text" name="search" placeholder="Search Products" class="search">
             </form>
             <a class="show_cart" href="<?= base_url('cart') ?>">Cart (<?= $cart_count ?>)</a>
 			<?php echo form_open('category', ['class' => 'categories_form']) ?>
                 <h3>Categories</h3>
                 <ul id="category">
                     <li>
-                        <button type="submit" class="active" name="category_type" value="0">
+                        <button type="submit" class="active category_btn" name="category_type" value="0">
                             <span><?= $allProducts ?></span><img src="<?= base_url('../assets/images/apple.png') ?>" alt="#"><h4>All Products</h4>
                         </button>
                     </li>
 					<?php foreach($category_count as $category): ?>
                     <li>
-                        <button type="submit" name="category_type" value="<?= $category['category_id']?>">
+                        <button type="submit" name="category_type" value="<?= $category['category_id']?>" class="category_btn">
                             <span><?= $category['category_count'] ?></span><img src="<?=base_url($category['icon']) ?>" alt="#"><h4><?= $category['product'] ?></h4>
                         </button>
                     </li>
@@ -71,7 +71,7 @@
             </form>
             <div>
                 <h3>All Products(<?= $allProducts ?>)</h3>
-                <ul>
+                <ul class="catalogue">
 					<?php foreach($product_data as $product): ?>
                     <li>
                         <a href="<?= base_url('product/'. $product['product_id'])?>">

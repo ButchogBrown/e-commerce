@@ -24,17 +24,17 @@
 </head>
 
 <body> 
-	<?php if($this->session->flashdata('success')): ?>
-		<script>
-				toastr.success("<?= $this->session->flashdata('success'); ?>");
-		</script>
-	<?php endif; ?>
+		<?php if($this->session->flashdata('success')): ?>
+			<script>
+					toastr.success("<?= $this->session->flashdata('success'); ?>");
+			</script>
+		<?php endif; ?>
 
-	<?php if($this->session->flashdata('error')): ?>
-		<script>
-				toastr.error("<?= $this->session->flashdata('error'); ?>");
-		</script>
-	<?php endif; ?>
+		<?php if($this->session->flashdata('error')): ?>
+			<script>
+					toastr.error("<?= $this->session->flashdata('error'); ?>");
+			</script>
+		<?php endif; ?>
 
     <div class="wrapper">
         <header>
@@ -61,10 +61,10 @@
             </ul>
         </aside>
         <section>
-			<?php echo form_open('', ['class' => 'search_form']) ?>
+			<?php echo form_open('admin_prdocut_search', ['class' => 'search_form']) ?>
             <!-- <form action="process.php" method="post" class="search_form"> -->
-                <input type="text" name="search" placeholder="Search Products">
-            </form>
+                <input type="text" name="search" placeholder="Search Products" >
+            <?php echo form_close(); ?>
             <button class="add_product" data-toggle="modal" data-target="#add_product_modal">Add Product</button>
             <?php echo form_open('admin_category', ['class' => 'status_form']) ?>
 			<!-- <form action="process.php" method="post" class="status_form"> -->
@@ -72,32 +72,32 @@
                 <ul>
                     <li>
                         <button type="submit" class="active" name="category_type" value="0">
-                            <span> <?= $allProducts ?> </span><img src="<?= base_url('../assets/images/all_products.png') ?>" alt="#"><h4>All Products</h4>
+                            <span id="all_products"> <?= $allProducts ?> </span><img src="<?= base_url('../assets/images/all_products.png') ?>" alt="#"><h4>All Products</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="category_type" value="1">
-                            <span> <?= $category_count[0]['category_count'] ?? 0  ?> </span><img src="<?= base_url('../assets/images/Vegetables.png') ?>" alt="#"><h4>Vegetabales</h4>
+                            <span id="vegetables"> <?= $category_count[0]['category_count'] ?? 0  ?> </span><img src="<?= base_url('../assets/images/Vegetables.png') ?>" alt="#"><h4>Vegetabales</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="category_type" value="2">
-                            <span> <?= $category_count[1]['category_count'] ?? 0 ?> </span><img src="<?= base_url('../assets/images/fruits.png') ?>" alt="#"><h4>Fruits</h4>
+                            <span id="fruits"> <?= $category_count[1]['category_count'] ?? 0 ?> </span><img src="<?= base_url('../assets/images/fruits.png') ?>" alt="#"><h4>Fruits</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="category_type" value="3">
-                            <span> <?= $category_count[2]['category_count'] ?? 0 ?> </span><img src="<?= base_url('../assets/images/pork.png') ?>" alt="#"><h4>Pork</h4>
+                            <span id="pork"> <?= $category_count[2]['category_count'] ?? 0 ?> </span><img src="<?= base_url('../assets/images/pork.png') ?>" alt="#"><h4>Pork</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="category_type" value="4">
-                            <span> <?= $category_count[3]['category_count'] ?? 0 ?> </span><img src="<?= base_url('../assets/images/beef.png') ?>" alt="#"><h4>Beef</h4>
+                            <span id="beef_meat"> <?= $category_count[3]['category_count'] ?? 0 ?> </span><img src="<?= base_url('../assets/images/beef.png') ?>" alt="#"><h4>Beef</h4>
                         </button>
                     </li>
 					<li>
                         <button type="submit" name="category_type" value="5">
-                            <span> <?= !empty($category_count[4]['category_count']) ? $category_count[3]['category_count'] : 0  ?> </span><img src="<?= base_url('../assets/images/chicken.png') ?>" alt="#"><h4>Chicken</h4>
+                            <span id="chicken">  <?= $category_count[4]['category_count'] ?? 0 ?>   </span><img src="<?= base_url('../assets/images/chicken.png') ?>" alt="#"><h4>Chicken</h4>
                         </button>
                     </li>
                 </ul>
@@ -115,7 +115,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="product_list">
 						<?php foreach($product_data as $data): ?>
                         <tr>
                             <td>
@@ -141,7 +141,7 @@
                                     <p>Are you sure you want to remove this item?</p>
 									<input type="hidden" name="product_id" value="<?= $data['product_id'] ?>" > 
                                     <button type="button" class="cancel_remove">Cancel</button>
-                                    <button type="submit">Remove</button>
+                                    <button type="submit" name="remove">Remove</button>
                                 </form>
                             </td>
                         </tr>
@@ -159,34 +159,34 @@
                         <h2>Add a Product</h2>
                         <ul>
                             <li>
-                                <input type="text" name="product_name" >
+                                <input type="text" name="product_name" value="<?= set_value('product_name') ?>">
                                 <label>Product Name</label>
 								<p class="error_message"></p>
 								
                             </li>
                             <li>
-                                <textarea name="description" ></textarea>
+                                <textarea name="description" ><?= set_value('description') ?></textarea>
                                 <label>Description</label>
 								<p class="error_message"></p>
                             </li>
                             <li>
                                 <label>Category</label>
-                                <select class="selectpicker" name="selectpicker">
-                                    <option value="1">Vegetables</option>
-                                    <option value="2">Fruits</option>
-                                    <option value="3">Pork</option>
-                                    <option value="4">Beef</option>
-                                    <option value="5">Chicken</option>
-                                </select>
+                                 <select class="selectpicker" name="selectpicker" id="">
+									<option value="1" <?= set_select('selectpicker', '1'); ?>>Vegetables</option>
+									<option value="2" <?= set_select('selectpicker', '2'); ?>>Fruits</option>
+									<option value="3" <?= set_select('selectpicker', '3'); ?>>Pork</option>
+									<option value="4" <?= set_select('selectpicker', '4'); ?>>Beef</option>
+									<option value="5" <?= set_select('selectpicker', '5'); ?>>Chicken</option>
+								</select>
 								<p class="error_message"></p>
                             </li>
                             <li>
-                                <input type="number" name="price" value="1" >
+                                <input type="number" name="price" value="<?= set_value('price', 1) ?>" >
                                 <label>Price</label>
 								<p class="error_message"></p>
                             </li>
                             <li>
-                                <input type="number" name="inventory" value="1" >
+                                <input type="number" name="inventory" value="<?= set_value('inventory', 1) ?>" >
                                 <label>Inventory</label>
 								<p class="error_message"></p>
                             </li>
@@ -203,7 +203,8 @@
                         </ul>
                         <button type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
                         <button type="submit">Save</button>
-                    </form>
+                    <!-- </form> -->
+					<?= form_close(); ?>
                 </div>
             </div>
         </div>
@@ -218,34 +219,34 @@
                         <h2>Add a Product</h2>
                         <ul>
                             <li>
-                                <input type="text" name="product_name" id="edit_product_name">
+                                <input type="text" name="product_name" id="edit_product_name" value="<?= set_value('product_name') ?>">
                                 <label>Product Name</label>
 								<p class="error_message"></p>
 								
                             </li>
                             <li>
-                                <textarea name="description" id="edit_description"></textarea>
+                                <textarea name="description" id="edit_description"><?= set_value('description') ?></textarea>
                                 <label>Description</label>
 								<p class="error_message"></p>
                             </li>
                             <li>
                                 <label>Category</label>
                                 <select class="selectpicker" name="selectpicker" id="edit_category">
-                                    <option value="1">Vegetables</option>
-                                    <option value="2">Fruits</option>
-                                    <option value="3">Pork</option>
-                                    <option value="4">Beef</option>
-                                    <option value="5">Chicken</option>
-                                </select>
+									<option value="1">Vegetables</option>
+									<option value="2">Fruits</option>
+									<option value="3" >Pork</option>
+									<option value="4">Beef</option>
+									<option value="5">Chicken</option>
+								</select>
 								<p class="error_message"></p>
                             </li>
                             <li>
-                                <input type="number" name="price" value="1" id="edit_price">
+                                <input type="number" name="price" id="edit_price" value="<?= set_value('price', 1) ?>">
                                 <label>Price</label>
 								<p class="error_message"></p>
                             </li>
                             <li>
-                                <input type="number" name="inventory" value="1" id="edit_inventory">
+                                <input type="number" name="inventory" id="edit_inventory" value="<?= set_value('inventory', 1) ?>">
                                 <label>Inventory</label>
 								<p class="error_message"></p>
                             </li>
@@ -261,7 +262,8 @@
                             </li> -->
                         </ul>
                         <button type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
-                        <button type="submit">Save</button>
+						<input type="hidden" name="product_id">;
+                        <button type="submit" id="save_edit">Save</button>
                     </form>
                 </div>
             </div>

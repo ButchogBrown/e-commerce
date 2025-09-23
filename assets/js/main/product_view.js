@@ -38,4 +38,10 @@ $(document).ready(function() {
     let quantity = Number($('#quantity').val());
     let max_quantity = Number($('#stock').val());
     updateButtons(quantity, max_quantity);
+
+	
 });
+
+
+
+

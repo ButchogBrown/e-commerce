@@ -17,12 +17,13 @@ class Order extends CI_Model {
 	}
 
 	public function numberOfOrder() {
-		return $this->db->select('count(orders.status_id) as status_count, orders.status_id, status.status_type')
-				->from('orders')
-				->join('status', 'orders.status_id = status.status_id')
-				->group_by('status_id')
-				->order_by('orders.status_id', 'asc')
-				->get()->result_array();
+
+		return $this->db->select('status.*, count(orders.order_id) as status_count')
+			->from('status')
+			->join('orders', 'orders.status_id = status.status_id', 'left')
+			->group_by('status.status_id')
+			->order_by('status.status_id')
+			->get()->result_array();
 	}
 
 	public function getAllOrder() {
@@ -52,6 +53,5 @@ class Order extends CI_Model {
 	public function updateStatus($order_id, $new_status) {
 		$this->db->where('order_id', $order_id)
 			->update('orders', array('status_id'=> $new_status));
-		var_dump($new_status);
 	}
 }

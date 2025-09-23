@@ -2,8 +2,8 @@ $(document).ready(function() {
     $("body").on("click", ".remove_item", function() {
         $(this).closest("ul").closest("li").addClass("confirm_delete");
         $(".popover_overlay").fadeIn();
-        $(".cart_items_form").find("input[name=action]").val("delete_cart_item");
-        $(".cart_items_form").find("input[name=update_cart_item_id]").val($(this).val());
+        // $(".cart_items_form").find("input[name=action]").val("delete_cart_item");
+        // $(".cart_items_form").find("input[name=update_cart_item_id]").val($(this).val());
     });
     $("body").on("click", ".cancel_remove", function() {
         $(this).closest("li").removeClass("confirm_delete");

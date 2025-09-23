@@ -45,7 +45,7 @@
             <h1>Let’s provide fresh items for everyone.</h1>
             <h2>Orders</h2>
             <div>
-                <a class="switch" href="catalogue.html">Switch to Shop View</a>
+                <a class="switch" href="<?= base_url('catalogue') ?>">Switch to Shop View</a>
                 <button class="profile">
                     <img src="<?= base_url('../assets/images/profile.png') ?>" alt="#">
                 </button>
@@ -79,22 +79,22 @@
                     </li>
                     <li>
                         <button type="submit" name="status" value="1">
-                            <span><?= $category_details[0]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/pending_icon.svg') ?>" alt="#"><h4>Pending</h4>
+                            <span id="pending"><?= $category_details[0]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/pending_icon.svg') ?>" alt="#"><h4>Pending</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="status" value="2">
-                            <span><?= $category_details[1]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/on_process_icon.svg') ?>" alt="#"><h4>On-Process</h4>
+                            <span id="on_process"><?= $category_details[1]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/on_process_icon.svg') ?>" alt="#"><h4>On-Process</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="status" value="3">
-                            <span><?= $category_details[2]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/shipped_icon.svg') ?>" alt="#"><h4>Shipped</h4>
+                            <span id="shipping"><?= $category_details[2]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/shipped_icon.svg') ?>" alt="#"><h4>Shipped</h4>
                         </button>
                     </li>
                     <li>
                         <button type="submit" name="status" value="4">
-                            <span><?= $category_details[3]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/delivered_icon.svg') ?>" alt="#"><h4>Delivered</h4>
+                            <span id="delivered"><?= $category_details[3]['status_count'] ?? 0 ?></span><img src="<?= base_url('../assets/images/delivered_icon.svg') ?>" alt="#"><h4>Delivered</h4>
                         </button>
                     </li>
                 </ul>
@@ -111,7 +111,7 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="order_lsit">
 						<?php foreach($order_data as $order): ?>
                         <tr>
                             <td><span><a href="#"><?= $order['order_id'] ?></a></span></td>

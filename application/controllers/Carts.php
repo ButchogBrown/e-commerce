@@ -70,6 +70,23 @@ class Carts extends CI_Controller {
 
 	public function remove($cart_id) {
 		$this->Cart->destroy($cart_id);
-		$this->index();
+
+		$user_data = $this->session->userdata('user_data');
+		$data['cart_items'] = $this->Cart->getAllCartItem($user_data['user_id']);
+		$data['cart_count'] = count($data['cart_items']);
+		$data['images'] = $this->Image->getAllImage($data['cart_items']);
+
+		if (empty($data['cart_items'])) {
+			$this->load->view('partials/error_card', array('error_message' => 'Oops! Your shopping cart is empty. Start adding some products!'));
+		}else {
+			$this->load->view('partials/cart_item', $data);
+		}
+		// $this->index();
+	}
+
+	public function getCartCount() {
+		$user_data = $this->session->userdata('user_data');
+		$cart_count = $this->Cart->cartCount($user_data['user_id']);
+		echo json_encode(['count' => $cart_count]);
 	}
 }

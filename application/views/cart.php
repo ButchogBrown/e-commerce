@@ -48,8 +48,10 @@
             <section>
                 <?php echo form_open('cart/remove/', ['class' => 'cart_items_form ']); ?>
                 <!-- <form class="cart_items_form"> -->
-                <ul>
+                <ul class="cart_items">
+					
                     <?php foreach($cart_items as $item): ?>
+					
                     <input type="hidden" name="carts_id[]" value="<?= $item['cart_id'] ?>">
                     <li>
                         <img src="<?= base_url($images[$item['product_id']][0]['image_path']) ?>" alt="">

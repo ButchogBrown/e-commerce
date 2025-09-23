@@ -38,7 +38,7 @@ class Users extends CI_Controller {
 			$this->session->set_flashdata('success', "Welcome, " .$this->input->post('first_name'). "! Your account is ready.");
 			$this->session->set_userdata('user_data', $user_data);
 
-			redirect('catalogue');
+			redirect('/');
 		}
 	}
 
@@ -72,7 +72,8 @@ class Users extends CI_Controller {
 			}
 
 		} else {
-			echo "hello chug";
+			$this->session->set_flashdata('error', 'All fields are required.');
+			redirect('/');
 		}
 
 	}

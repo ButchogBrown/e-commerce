@@ -12,6 +12,14 @@ class Product extends CI_Model {
 		$this->db->order_by('products.created_at', 'DESC');
 		return $this->db->get()->result_array();
 	}
+
+	public function adminGetAllProduct() {
+		$this->db->select('products.*, categories.*');
+		$this->db->from('products');
+		$this->db->join('categories', 'products.category_id = categories.category_id');
+		$this->db->order_by('products.created_at', 'DESC');
+		return $this->db->get()->result_array();
+	}
 	
 	public function getProduct($product_id) {
 		$this->db->select('products.*, categories.*');
@@ -55,9 +63,12 @@ class Product extends CI_Model {
 	public function updateyQuantity($product_id, $old_quantity) {
 		$data = $this->getProduct($product_id);
 		$product['stock'] = $data['stock'] - $old_quantity;
+		$product['sold'] = $data['sold'] + $old_quantity;
 
 		$this->db->where('product_id', $product_id)
 			->update('products', $product);
+		
+
 		return;
 	}
 
@@ -82,6 +93,17 @@ class Product extends CI_Model {
 		$this->db->where('product_id', $product_id)
 			->update('products', $product_data);
 		
+	}
+
+	public function adminProductSearch($search_data) {
+
+		$this->db->select('products.*, categories.*');
+		$this->db->from('products');
+		$this->db->where('stock !=', 0);
+		$this->db->like('products.product_name', $search_data);
+		$this->db->join('categories', 'products.category_id = categories.category_id');
+		$this->db->order_by('products.created_at', 'DESC');
+		return $this->db->get()->result_array();
 	}
 
 

@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$('.error_message').hide();
     /* To delete a product */
     $("body").on("click", ".delete_product", function() {
+		
         $(this).closest("tr").addClass("show_delete");
         $(".popover_overlay").fadeIn();
         $("body").addClass("show_popover_overlay");
@@ -39,13 +40,13 @@ $(document).ready(function() {
         $(".add_product_form").trigger("submit");
     });
 
-    $("body").on("hidden.bs.modal", "#add_product_modal", function() {
-        $(".form_data_action").val("reset_form");
-        $(".add_product_form").trigger("submit");
-        $(".add_product_form").attr("data-modal-action", 0);
-        $(".form_data_action").find("textarea").addClass("jhaver");
+    // $("body").on("hidden.bs.modal", "#add_product_modal", function() {
+    //     $(".form_data_action").val("reset_form");
+    //     $(".add_product_form").trigger("submit");
+    //     $(".add_product_form").attr("data-modal-action", 0);
+    //     $(".form_data_action").find("textarea").addClass("jhaver");
 
-    });
+    // });
 
     // $("body").on("submit", ".add_product_form", function() {
     //     $.ajax({
@@ -128,7 +129,7 @@ $(document).ready(function() {
 		$('#edit_category').val(category).trigger('change');
 		$('#edit_product_name').val(product_name);
 		$('#edit_description').text(description);
-
+		$('input[name="product_id"]').val(product_id);
 
         $("input[name=edit_product_id]").val($(this).val());
         $("#edit_product_modal").modal("show");
